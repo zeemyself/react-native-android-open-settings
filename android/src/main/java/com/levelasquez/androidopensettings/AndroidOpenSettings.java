@@ -195,6 +195,18 @@ public class AndroidOpenSettings extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void applicationSelfSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        if (intent.resolveActivity(reactContext.getPackageManager()) != null) {
+            reactContext.startActivity(intent);
+        }
+    }
+
+    @ReactMethod
     public void deviceInfoSettings() {
         Intent intent = new Intent(Settings.ACTION_DEVICE_INFO_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
