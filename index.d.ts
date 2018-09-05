@@ -17,6 +17,7 @@ declare const _default: {
   accessibilitySettings: () => void;
   applicationSettings: () => void;
   deviceInfoSettings: () => void;
-  applicationSelfSettings: (package: String) => void;
+  notificationSetting: () => void;
+  soundSetting: () => void;
 }
 export default _default

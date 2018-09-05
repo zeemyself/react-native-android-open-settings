@@ -36,9 +36,11 @@ const accessibilitySettings = () => RNAndroidOpenSettings.accessibilitySettings(
 
 const applicationSettings = () => RNAndroidOpenSettings.applicationSettings()
 
-const applicationSelfSettings = package => RNAndroidOpenSettings.applicationSelfSettings(package)
+const notificationSetting = () => RNAndroidOpenSettings.notificationSetting()
 
 const deviceInfoSettings = () => RNAndroidOpenSettings.deviceInfoSettings()
+
+const soundSetting = () => RNAndroidOpenSettings.soundSetting()
 
 module.exports = {
   generalSettings,
@@ -59,5 +61,6 @@ module.exports = {
   accessibilitySettings,
   applicationSettings,
   deviceInfoSettings,
-  applicationSelfSettings,
+  notificationSetting,
+  soundSetting
 }
