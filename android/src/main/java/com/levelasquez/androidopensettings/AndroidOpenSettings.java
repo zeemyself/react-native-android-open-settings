@@ -195,18 +195,6 @@ public class AndroidOpenSettings extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void applicationSelfSettings(String package) {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        Uri uri = Uri.fromParts("package", package, null);
-        intent.setData(uri);
-        if (intent.resolveActivity(reactContext.getPackageManager()) != null) {
-            reactContext.startActivity(intent);
-        }
-    }
-
-    @ReactMethod
     public void deviceInfoSettings() {
         Intent intent = new Intent(Settings.ACTION_DEVICE_INFO_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -215,4 +203,36 @@ public class AndroidOpenSettings extends ReactContextBaseJavaModule {
             reactContext.startActivity(intent);
         }
     }
+
+    @ReactMethod
+    public void notificationSetting() {
+        goToNotificationSettings(null, reactContext)
+    }
+
+    public void goToNotificationSettings(String channel, Context context) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (channel != null) {
+                intent.setAction(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                intent.putExtra(Settings.EXTRA_CHANNEL_ID, channel);
+            } else {
+                intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+            }
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+        } else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+        } else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+            intent.putExtra("app_package", context.getPackageName());
+            intent.putExtra("app_uid", context.getApplicationInfo().uid);
+        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setData(Uri.parse("package:" + context.getPackageName()));
+        }
+        context.startActivity(intent);
+}
 }
