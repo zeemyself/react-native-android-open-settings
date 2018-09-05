@@ -40,6 +40,8 @@ const notificationSetting = () => RNAndroidOpenSettings.notificationSetting()
 
 const deviceInfoSettings = () => RNAndroidOpenSettings.deviceInfoSettings()
 
+const soundSetting = () => RNAndroidOpenSettings.soundSetting()
+
 module.exports = {
   generalSettings,
   appDetailsSettings,
@@ -60,4 +62,5 @@ module.exports = {
   applicationSettings,
   deviceInfoSettings,
   notificationSetting,
+  soundSetting
 }

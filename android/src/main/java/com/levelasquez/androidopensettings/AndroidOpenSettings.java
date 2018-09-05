@@ -8,6 +8,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import android.os.Build;
 
 public class AndroidOpenSettings extends ReactContextBaseJavaModule {
 
@@ -206,10 +207,20 @@ public class AndroidOpenSettings extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void notificationSetting() {
-        goToNotificationSettings(null, reactContext)
+        goToNotificationSettings(null, reactContext);
     }
 
-    public void goToNotificationSettings(String channel, Context context) {
+    @ReactMethod
+    public void soundSetting() {
+        Intent intent = new Intent(Settings.ACTION_SOUND_SETTINGS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        if (intent.resolveActivity(reactContext.getPackageManager()) != null) {
+            reactContext.startActivity(intent);
+        }
+    }
+
+    public void goToNotificationSettings(String channel, ReactContext context) {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

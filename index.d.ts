@@ -18,5 +18,6 @@ declare const _default: {
   applicationSettings: () => void;
   deviceInfoSettings: () => void;
   notificationSetting: () => void;
+  soundSetting: () => void;
 }
 export default _default
