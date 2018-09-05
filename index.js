@@ -36,7 +36,7 @@ const accessibilitySettings = () => RNAndroidOpenSettings.accessibilitySettings(
 
 const applicationSettings = () => RNAndroidOpenSettings.applicationSettings()
 
-const applicationSelfSettings = package => RNAndroidOpenSettings.applicationSelfSettings(package)
+const applicationSelfSettings = packageName => RNAndroidOpenSettings.applicationSelfSettings(packageName)
 
 const deviceInfoSettings = () => RNAndroidOpenSettings.deviceInfoSettings()
 
